@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tes-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tes
+  template:
+    metadata:
+      labels:
+        app: tes
+    spec:
+      containers:
+      - name: tes
+        image: yourdockerhub/tes-app:v1
+        ports:
+        - containerPort: 8080
