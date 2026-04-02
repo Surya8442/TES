@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: tes-service
 spec:
-  type: LoadBalancer
+  type: nodePort
   selector:
     app: tes
   ports:
     - port: 80
       targetPort: 8080
+      nodePort: 30007
       
