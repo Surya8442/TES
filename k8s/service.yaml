@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: tes-service
 spec:
-  type: nodePort
+  type: NodePort
   selector:
     app: tes
   ports:
