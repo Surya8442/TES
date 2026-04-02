@@ -13,6 +13,7 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Surya8442/TES.git'
@@ -26,6 +27,7 @@ pipeline {
                 }
             }
         }
+
         stage('Upload to Nexus') {
             steps {
                 dir('backend') {
@@ -63,9 +65,15 @@ pipeline {
             steps {
                 sh '''
                 export KUBECONFIG=/var/lib/jenkins/.kube/config
+
+                aws eks update-kubeconfig --region ap-south-1 --name mycluster
+
+                kubectl get nodes
+
                 kubectl apply -f k8s/
                 '''
             }
         }
+
     }
 }
