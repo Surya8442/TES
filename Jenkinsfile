@@ -46,21 +46,18 @@ pipeline {
         stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'Docker_cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh """
-                    echo "$PASS" | docker login -u "$USER" --password-stdin
-                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                    docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                    """
+                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                    sh 'docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG'
                 }
             }
         }
 
-       stage('Deploy to Kubernetes') {
+        stage('Deploy to Kubernetes') {
             steps {
-                sh """
+                sh '''
                 export KUBECONFIG=/var/lib/jenkins/.kube/config
                 kubectl apply -f k8s/
-                """
+                '''
             }
         }
     }
