@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_USER = "yourdockerhub"
+        DOCKER_USER = "surya8442"
         IMAGE_NAME = "tes-app"
         IMAGE_TAG = "v1"
     }
@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/yourusername/tes.git'
+                git branch: 'main', url: 'https://github.com/Surya8442/TES.git'
             }
         }
 
@@ -45,7 +45,7 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                withCredentials([string(credentialsId: 'docker-pass', variable: 'PASS')]) {
+                withCredentials([string(credentialsId: 'Docker_cred', variable: 'PASS')]) {
                     sh 'echo $PASS | docker login -u $DOCKER_USER --password-stdin'
                     sh 'docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG'
                 }
